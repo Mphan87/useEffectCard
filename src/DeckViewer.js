@@ -11,22 +11,27 @@ const DeckViewer = () => {
         async function getData() {
             let d = await axios.get(`http://deckofcardsapi.com/api/deck/new/shuffle/`);
             setDeck(d.data);
+            let deck_id = deck.deck_id
+            let cardRes = await axios.get(`http://deckofcardsapi.com/api/deck/${deck_id}/draw/`);
+            const randomCard = cardRes.data.cards[0]
+            setCard(randomCard.image)
         }
         getData();
     }, [setDeck]);
  
-     
-    useEffect(() => {
-        async function getCard() {
-            let deck_id = deck.deck_id
 
-            let cardRes = await axios.get(`http://deckofcardsapi.com/api/deck/${deck_id}/draw/`);
-            const randomCard = cardRes.data.cards[0]
-            setCard(randomCard.image)
 
-        }
-        getCard();
-    }, [setCard]);
+    // useEffect(() => {
+    //     async function getCard() {
+    //         let deck_id = deck.deck_id
+
+    //         let cardRes = await axios.get(`http://deckofcardsapi.com/api/deck/${deck_id}/draw/`);
+    //         const randomCard = cardRes.data.cards[0]
+    //         setCard(randomCard.image)
+
+    //     }
+    //     getCard();
+    // }, [setCard]);
 
 
     const handleClicker = (e) => {
